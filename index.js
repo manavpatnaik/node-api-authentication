@@ -15,6 +15,8 @@ if (process.env.NODE_ENV === "development") {
 // Middleware
 app.use(express.json());
 
+dckjvndkfjn random
+
 // Routes
 app.use('/auth', require('./routes/user'))
 
