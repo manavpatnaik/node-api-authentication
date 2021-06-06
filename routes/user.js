@@ -4,6 +4,7 @@ const {
   registerUser,
   loginUser,
   protectedResource,
+  googleSignIn,
 } = require("../controllers/user");
 const { validateBody, schemas } = require("../helpers/routeHelpers");
 const passportJwt = passport.authenticate("jwt", { session: false });
@@ -16,7 +17,9 @@ router
     passport.authenticate("local", { session: false }),
     loginUser
   );
-
+router
+  .route("/google")
+  .post(passport.authenticate("googleToken", { session: false }), googleSignIn);
 router.route("/secret").get(passportJwt, protectedResource);
 
 module.exports = router;

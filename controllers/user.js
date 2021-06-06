@@ -17,10 +17,13 @@ exports.registerUser = async (req, res, next) => {
   console.log("Register user called");
   const { email, password } = req.value.body;
 
-  const user = await User.findOne({ email });
-  if (user) return res.status(400).send({ Error: "User already exists" });
+  const user = await User.findOne({ "local.email": email });
+  if (user) return res.status(403).send({ Error: "User already exists" });
 
-  const newUser = new User({ email, password });
+  const newUser = new User({
+    method: "local",
+    local: { email: email, password: password },
+  });
   await newUser.save();
 
   const token = signToken(newUser);
@@ -32,6 +35,11 @@ exports.loginUser = async (req, res, next) => {
   console.log(req.user);
   const token = signToken(req.user);
   console.log("Successful login");
+  res.status(200).send({ token });
+};
+
+exports.googleSignIn = async (req, res, next) => {
+  const token = signToken(req.user);
   res.status(200).send({ token });
 };
 
