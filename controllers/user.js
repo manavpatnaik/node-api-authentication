@@ -1,4 +1,17 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+
+const signToken = (user) => {
+  const token = jwt.sign(
+    {
+      iss: "Manav",
+      sub: user.id,
+      exp: new Date().setDate(new Date().getDate() + 1),
+    },
+    process.env.JWT_SECRET
+  );
+  return token;
+};
 
 exports.registerUser = async (req, res, next) => {
   console.log("Register user called");
@@ -10,12 +23,12 @@ exports.registerUser = async (req, res, next) => {
   const newUser = new User({ email, password });
   await newUser.save();
 
-  res.status(201).json(newUser);
+  const token = signToken(newUser);
+
+  res.status(201).json({ token });
 };
 
-exports.loginUser = async (req, res, next) => {
-  console.log("Login user called");
-};
+exports.loginUser = async (req, res, next) => {};
 
 exports.protectedResource = async (req, res, next) => {
   console.log("Protected route called");
