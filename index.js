@@ -6,9 +6,17 @@ const mongoose = require("mongoose");
 // Environment configuration
 dotenv.config();
 
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}cluster0.hcqem.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`
-);
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.hcqem.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    }
+  )
+  .then((conn) => console.log(`Connected to: ${conn.connection.host}`));
 
 const app = express();
 
