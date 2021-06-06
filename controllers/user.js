@@ -1,4 +1,6 @@
 exports.registerUser = async (req, res, next) => {
+  console.log(req.value.body);
+  console.log(req.body);
   console.log("Register user called");
 };
 
