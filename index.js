@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 // Environment configuration
 dotenv.config();
 
+const passport = require("passport");
+const passportConf = require("./passport");
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.hcqem.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,

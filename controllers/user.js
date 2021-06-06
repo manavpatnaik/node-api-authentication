@@ -31,5 +31,5 @@ exports.registerUser = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {};
 
 exports.protectedResource = async (req, res, next) => {
-  console.log("Protected route called");
+  console.log("I managed to get here");
 };

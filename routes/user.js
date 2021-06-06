@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const passport = require("passport");
 const {
   registerUser,
   loginUser,
@@ -9,6 +10,8 @@ const { validateBody, schemas } = require("../helpers/routeHelpers");
 router.route("/register").post(validateBody(schemas.authSchema), registerUser);
 router.route("/login").post(loginUser);
 
-router.route("/secret").get(protectedResource);
+router
+  .route("/secret") 
+  .get(passport.authenticate("jwt", { session: false }), protectedResource);
 
 module.exports = router;
