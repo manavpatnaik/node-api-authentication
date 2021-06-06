@@ -28,8 +28,14 @@ exports.registerUser = async (req, res, next) => {
   res.status(201).json({ token });
 };
 
-exports.loginUser = async (req, res, next) => {};
+exports.loginUser = async (req, res, next) => {
+  console.log(req.user);
+  const token = signToken(req.user);
+  console.log("Successful login");
+  res.status(200).send({ token });
+};
 
 exports.protectedResource = async (req, res, next) => {
   console.log("I managed to get here");
+  res.send(req.user);
 };
